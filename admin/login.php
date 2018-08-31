@@ -8,26 +8,29 @@
         }else{
             $email=$_POST['email'];
             $password=$_POST['password'];
-            // echo $password;
-            // echo $email;
-            //和数据中的数据进行验证
-            $link=mysqli_connect('localhost','root','root','baixiu');
+
+            // $link=mysqli_connect('localhost','root','root','baixiu');
             //设置编码utf-8
-            mysqli_query($link,'set names utf8');
+            // mysqli_query($link,'set names utf8');
             $sql="select * from users where email='$email'";
             // $sql="select * from users";
-            // echo $sql;
-            $reader=mysqli_query($link,$sql);
-            // echo '<pre>';
-            // print_r($reader);
-            // echo '</pre>';
+            // // echo $sql;
+            // $reader=mysqli_query($link,$sql);
 
-            $data=mysqli_fetch_assoc($reader);;
+            require'static/db_fun.php';
+            xiu_connect();
+            xiu_query('set names utf8');
+            $data=xiu_query_assoc($sql);
+
+            // $data=mysqli_fetch_assoc($reader);;
+            xiu_close();
             // var_dump($data);
             if($data){        
                 if($password==$data['password']){
                     session_start();
+                    // $_SESSION['current_logged_in'] = true;
                     $_SESSION['current-user-id']=$data['id'];
+                    // $_SESSION['current_logged_in_user_id'] = $data['id'];
                     // $message='登录成功!';
                     header('location:index.php');
                 }else{
@@ -39,12 +42,12 @@
         }
     }else{
         //GET方式提交的数据,直接显示html部分内容
-      if(isset($_COOKIE['PHPSESSID'])){
-        session_start();
-        if(isset($_SESSION['current-user-id'])){
-          header('location:index1.php');
-        }
-      }
+      // if(isset($_COOKIE['PHPSESSID'])){
+      //   session_start();
+      //   if(isset($_SESSION['current-user-id'])){
+      //     header('location:index.php');
+      //   }
+      // }
     }
     
 ?>
@@ -75,7 +78,9 @@
               placeholder="邮箱" 
               autofocus
               name="email"
+              value="<?php echo isset($_POST['email']) ? $_POST['email']:''; ?>"
               >
+
       </div>
       <div class="form-group">
         <label for="password" class="sr-only">密码</label>
