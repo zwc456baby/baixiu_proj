@@ -29,7 +29,7 @@
                     session_start();
                     $_SESSION['current-user-id']=$data['id'];
                     // $message='登录成功!';
-                    header('location:index1.php');
+                    header('location:index.php');
                 }else{
                     $message='用户名或密码错误!';
                 }

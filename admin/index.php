@@ -1,4 +1,5 @@
 <?php
+$current_page = "index";
     // 当用于登录后才能访问此页面
     //首先判断用户是否登陆
     //1-判断用户是否带有钥匙
@@ -39,7 +40,7 @@
     <nav class="navbar">
       <button class="btn btn-default navbar-btn fa fa-bars"></button>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="profile.html"><i class="fa fa-user"></i>个人中心</a></li>
+        <li><a href="profile.php"><i class="fa fa-user"></i>个人中心</a></li>
         <li><a href="./loginout.php"><i class="fa fa-sign-out"></i>退出</a></li>
       </ul>
     </nav>
@@ -47,7 +48,7 @@
       <div class="jumbotron text-center">
         <h1>One Belt, One Road</h1>
         <p>Thoughts, stories and ideas.</p>
-        <p><a class="btn btn-primary btn-lg" href="post-add.html" role="button">写文章</a></p>
+        <p><a class="btn btn-primary btn-lg" href="post-add.php" role="button">写文章</a></p>
       </div>
       <div class="row">
         <div class="col-md-4">
