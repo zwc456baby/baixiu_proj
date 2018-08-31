@@ -1,0 +1,1 @@
+﻿update users set avatar="uploads/avatar_cy.jpg" where email="zhouzhou@qq.com";
