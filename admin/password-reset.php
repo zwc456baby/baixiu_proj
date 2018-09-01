@@ -70,7 +70,7 @@
           <i class="fa fa-thumb-tack"></i>文章<i class="fa fa-angle-right"></i>
         </a>
         <ul id="menu-posts" class="collapse">
-          <li><a href="posts.html">所有文章</a></li>
+          <li><a href="posts.php">所有文章</a></li>
           <li><a href="post-add.html">写文章</a></li>
           <li><a href="categories.html">分类目录</a></li>
         </ul>

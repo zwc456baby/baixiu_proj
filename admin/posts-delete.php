@@ -15,10 +15,8 @@ xiu_execute($sql);
 xiu_close();
 
 $target = isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'posts.php';
-console_log('target:'.$target);
+console_head('target:'.$target);
 header('Location:'.$target);
-
-
 
 }else{
 //id is null.header index.php

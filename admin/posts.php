@@ -1,5 +1,5 @@
 <?php
-$is_debug = false;
+$is_debug = true;
 $current_page="posts";
 
 require 'static/db_fun.php';
@@ -213,13 +213,13 @@ function xiu_pagination ($page, $total, $format, $visible = 5) {
       <button class="btn btn-default navbar-btn fa fa-bars"></button>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="profile.php"><i class="fa fa-user"></i>个人中心</a></li>
-        <li><a href="login.html"><i class="fa fa-sign-out"></i>退出</a></li>
+        <li><a href="login.php"><i class="fa fa-sign-out"></i>退出</a></li>
       </ul>
     </nav>
     <div class="container-fluid">
       <div class="page-title">
         <h1>所有文章</h1>
-        <a href="post-add.html" class="btn btn-primary btn-xs">写文章</a>
+        <a href="post-add.php" class="btn btn-primary btn-xs">写文章</a>
       </div>
       <!-- 有错误信息时展示 -->
       <!-- <div class="alert alert-danger">
