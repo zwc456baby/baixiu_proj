@@ -6,6 +6,7 @@ function xiu_get_current_user(){
     if(isset($GLOBALS['current_user'])){
         return $GLOBALS['current_user'];
     }
+
     session_start();
     if(empty($_SESSION['current-user-id'])){
         header('Location:/admin/login.php');

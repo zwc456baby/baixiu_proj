@@ -41,10 +41,10 @@ function xiu_query($sql){
   $data = array();
 
   // 执行参数中指定的 SQL 语句
+
   if ($result = mysqli_query($sql_connect, $sql)) {
     // 查询成功，则获取结果集中的数据
-    if($result == true)
-      return null;
+
     // 遍历每一行的数据
     while ($row = mysqli_fetch_array($result)) {
       // 追加到结果数据容器中
@@ -53,7 +53,6 @@ function xiu_query($sql){
     // 释放结果集
     mysqli_free_result($result);
   }
-
   // 返回容器中的数据
   return $data;
 }
