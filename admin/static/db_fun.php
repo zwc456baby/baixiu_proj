@@ -74,4 +74,23 @@ function xiu_query_assoc($sql){
     // 释放结果集
     mysqli_free_result($result);
   }
+
+}
+
+  /**
+ * 执行一个非查询语句，返回执行语句后受影响的行数
+ * @param  string  $sql 非查询语句
+ * @return integer      受影响的行数
+ */
+function xiu_execute ($sql) {
+
+  global $sql_connect;
+  // 执行 SQL 语句，获取一个查询对象
+  if ($result = mysqli_query($sql_connect, $sql)) {
+    // 查询成功，获取执行语句后受影响的行数
+    $affected_rows = mysqli_affected_rows($sql_connect);
+  }
+
+  // 返回受影响的行数
+  return isset($affected_rows) ? $affected_rows : 0;
 }

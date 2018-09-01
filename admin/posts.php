@@ -1,4 +1,5 @@
 <?php
+$is_debug = false;
 $current_page="posts";
 
 require 'static/db_fun.php';
@@ -226,7 +227,7 @@ function xiu_pagination ($page, $total, $format, $visible = 5) {
       </div> -->
       <div class="page-action">
         <!-- show when multiple checked -->
-        <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+        <a class="btn btn-danger btn-sm" href="/baixiu/admin/posts-delete.php" id="delet_prop" style="display: none;">批量删除</a>
         <form class="form-inline" action="/baixiu/admin/posts.php">
           <select name="c" class="form-control input-sm">
             <option value="all">所有分类</option>
@@ -254,7 +255,7 @@ function xiu_pagination ($page, $total, $format, $visible = 5) {
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <th class="text-center" width="40"><input type="checkbox"></th>
+            <th class="text-center" width="40"><input type="checkbox" id="thCheckbox"></th>
             <th>标题</th>
             <th>作者</th>
             <th>分类</th>
@@ -268,7 +269,7 @@ function xiu_pagination ($page, $total, $format, $visible = 5) {
 
         <tbody>
         	<?php foreach ($posts as $item) { ?>
-	          <tr>
+	          <tr id="<?php echo $item['id']; ?>">
 	            <td class="text-center"><input type="checkbox"></td>
 	            <td><?php echo $item['title']?></td>
 
@@ -278,7 +279,7 @@ function xiu_pagination ($page, $total, $format, $visible = 5) {
 	            <td class="text-center"><?php echo convert_status($item['status']); ?></td>
 	            <td class="text-center">
 	              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-	              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+	              <a href="/baixiu/admin/posts-delete.php?id=<?php echo $item['id']; ?>" class="btn btn-danger btn-xs">删除</a>
 	            </td>
 	          </tr>
         	<?php }; ?>
@@ -296,6 +297,62 @@ function xiu_pagination ($page, $total, $format, $visible = 5) {
 
   <script src="../assets/vendors/jquery/jquery.js"></script>
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+  <script type="text/javascript">
+          // 获取所需操作的界面元素
+      var $btnDelete = $('#delet_prop')
+      var $tdCheckbox = $('td > input[type=checkbox]')
+
+      // 用于记录界面上选中行的数据 ID
+      var checked = []
+
+      /**
+       * 表格中的复选框选中发生改变时控制删除按钮的链接参数和显示状态
+       */
+      $tdCheckbox.on('change', function () {
+        var $this = $(this);
+        // console.log($btnDelete)
+        // console.log($this)
+        // console.log($this.parent().parent().attr('id'))
+        // 为了可以在这里获取到当前行对应的数据 ID
+        // 在服务端渲染 HTML 时，给每一个 tr 添加 data-id 属性，记录数据 ID
+        // 这里通过 data-id 属性获取到对应的数据 ID
+        var id = parseInt($this.parent().parent().attr('id'))
+
+        // ID 如果不合理就忽略
+        if (!id) {
+          console.log("id 不合理:"+id);
+          return
+        }
+        console.log('start push ');
+        if ($this.prop('checked')) {
+          // 选中就追加到数组中
+          checked.push(id)
+        } else {
+          // 未选中就从数组中移除
+          checked.splice(checked.indexOf(id), 1)
+        }
+        console.log('enable or show delete btn ');
+        // 有选中就显示操作按钮，没选中就隐藏
+        checked.length ? $btnDelete.fadeIn() : $btnDelete.fadeOut()
+
+        // 批量删除按钮链接参数
+        // search 是 DOM 标准属性，用于设置或获取到的是 a 链接的查询字符串
+        console.log('prop delete');
+        $btnDelete.prop('href', '/baixiu/admin/posts-delete.php?id=' + checked.join(','))
+
+      })
+
+      /**
+       * 全选 / 全不选
+       */
+      var $thCheckbox = $("#thCheckbox");
+      console.log($thCheckbox);
+      $thCheckbox.on('change', function () {
+        var checked = $(this).prop('checked')
+        // 设置每一行的选中状态并触发 上面 👆 的事件
+        $tdCheckbox.prop('checked', checked).trigger('change')
+      })
+  </script>
   <script>NProgress.done()</script>
 </body>
 </html>
